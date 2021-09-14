@@ -1,2 +1,3 @@
-﻿  basic_window.cpp
-  basic_window.vcxproj -> c:\users\22103603\documents\visual studio 2015\Projects\basic_window\Debug\basic_window.exe
+﻿  stdafx.cpp
+  basic_window.cpp
+  basic_window.vcxproj -> C:\Users\22103603\Source\Repos\MFC-Projects\basic_window\Debug\basic_window.exe
