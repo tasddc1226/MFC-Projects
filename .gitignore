@@ -81,6 +81,25 @@ ipch/
 *.sdf
 *.cachefile
 *.VC.db
+*.ipch
+*.exp
+*.iobj
+*.ipdb
+*.tlog
+*.log
+*.res
+*.idb
+*.lastbuildstate
+
+# Directories
+ipch
+Debug
+Release
+
+# Executables
+*.exe
+*.dll
+*.lib
 
 # Visual Studio profiler
 *.psess
