@@ -33,6 +33,8 @@ BEGIN_MESSAGE_MAP(Cbasic_ListBoxDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &Cbasic_ListBoxDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &Cbasic_ListBoxDlg::OnBnClickedButton2)
+	ON_LBN_SELCHANGE(IDC_LIST1, &Cbasic_ListBoxDlg::OnSelchangeList1)
+	ON_BN_CLICKED(IDC_BUTTON3, &Cbasic_ListBoxDlg::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -124,5 +126,40 @@ void Cbasic_ListBoxDlg::OnBnClickedButton2()
 		if (IDOK == MessageBox(str, L"정말 삭제할까요?", MB_OKCANCEL | MB_ICONQUESTION)) {
 			m_my_list.DeleteString(index); // 선택 위치의 스트링 삭제
 		}
+	}
+}
+
+
+void Cbasic_ListBoxDlg::OnSelchangeList1()
+{
+	// 현재 선택한 상태의 인덱스를 얻어옴.
+	int index = m_my_list.GetCurSel();
+	CString str;
+	m_my_list.GetText(index, str);
+
+	SetDlgItemText(IDC_EDIT1, str);
+}
+
+// 리스트의 내용을 찾는다.
+void Cbasic_ListBoxDlg::OnBnClickedButton3()
+{
+	CString str;
+
+	GetDlgItemText(IDC_EDIT2, str);
+
+	// 어디서부터 찾을 것인지, str에 명시된 내용을 가지고 찾음.
+	// 없으면 -1, 있으면 해당 index 반환
+	//int index = m_my_list.FindString(-1, str); // FindStringExact : 정확하게 일치한 값을 찾고싶을 때 사용
+	
+	// 중복도 모두 찾아보자.
+	int start_index = m_my_list.GetCurSel();
+
+	int index = m_my_list.FindString(start_index, str);
+
+	if (index == LB_ERR) {
+		AfxMessageBox(L"찾지 못했습니다!");
+	} else {
+		m_my_list.SetCurSel(index);
+		AfxMessageBox(L"찾았습니다! 해당 위치를 가리킵니다.");
 	}
 }

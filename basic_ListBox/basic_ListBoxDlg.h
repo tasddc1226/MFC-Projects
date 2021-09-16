@@ -35,4 +35,6 @@ public:
 	CListBox m_my_list;
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
+	afx_msg void OnSelchangeList1();
+	afx_msg void OnBnClickedButton3();
 };
