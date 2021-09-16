@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(Cbasic_ListBoxDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &Cbasic_ListBoxDlg::OnBnClickedButton2)
 	ON_LBN_SELCHANGE(IDC_LIST1, &Cbasic_ListBoxDlg::OnSelchangeList1)
 	ON_BN_CLICKED(IDC_BUTTON3, &Cbasic_ListBoxDlg::OnBnClickedButton3)
+	ON_LBN_DBLCLK(IDC_LIST1, &Cbasic_ListBoxDlg::OnDblclkList1)
 END_MESSAGE_MAP()
 
 
@@ -50,7 +51,7 @@ BOOL Cbasic_ListBoxDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// 값을 미리 추가할 수도 있다.
-	m_my_list.AddString(L"마재승");
+	/*m_my_list.AddString(L"마재승");
 
 	m_my_list.AddString(L"강다혜");
 
@@ -58,7 +59,10 @@ BOOL Cbasic_ListBoxDlg::OnInitDialog()
 
 	m_my_list.AddString(L"고다경");
 
-	m_my_list.AddString(L"홍길동");
+	m_my_list.AddString(L"홍길동");*/
+	
+	// 현재 디렉토리 목록을 리스트박스 다이얼로그에 추가
+	m_my_list.Dir(DDL_READWRITE | DDL_DIRECTORY, L"*");
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -162,4 +166,28 @@ void Cbasic_ListBoxDlg::OnBnClickedButton3()
 		m_my_list.SetCurSel(index);
 		AfxMessageBox(L"찾았습니다! 해당 위치를 가리킵니다.");
 	}
+}
+
+
+void Cbasic_ListBoxDlg::OnDblclkList1()
+{
+	// 유니코드를 지원하는 캐릭터를 최대 경로길이 만큼 배열 선언
+	wchar_t temp_path[MAX_PATH]; 
+
+	// 현재 내 프로그램의 작업경로를 템프 경로에 넣는다.
+	GetCurrentDirectory(MAX_PATH, temp_path);
+
+	// 현재 위치의 인덱스를 얻어옴
+	int index = m_my_list.GetCurSel();
+	CString str;
+	m_my_list.GetText(index, str); // 인덱스 위치의 문자열을 str에 추가
+
+	str = L"\\" + str; // 얻어온 파일명 앞에 \를 붙임
+	str = temp_path + str; // 현재 얻어온 경로 앞에 또 붙임
+	
+	// 부모 여부, 실행 명령, 실행 파일명, 내 파일의 경로, 어느경로에서 작업?, 일반모드로..
+	ShellExecute(NULL, L"open", L"notepad.exe", str, NULL, SW_SHOW);
+
+	// 더블클릭시 내 프로그램의 경로 출력
+	AfxMessageBox(str);
 }

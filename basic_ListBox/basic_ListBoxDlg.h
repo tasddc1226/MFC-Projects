@@ -37,4 +37,5 @@ public:
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnSelchangeList1();
 	afx_msg void OnBnClickedButton3();
+	afx_msg void OnDblclkList1();
 };
