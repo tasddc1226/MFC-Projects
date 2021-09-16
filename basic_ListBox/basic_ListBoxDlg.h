@@ -4,6 +4,7 @@
 
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
 
 
 // Cbasic_ListBoxDlg 대화 상자
@@ -38,4 +39,10 @@ public:
 	afx_msg void OnSelchangeList1();
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnDblclkList1();
+	CProgressCtrl m_my_progress;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnNMCustomdrawProgress1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton5();
+	afx_msg void OnBnClickedCheck1();
 };

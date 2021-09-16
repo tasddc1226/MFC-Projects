@@ -26,6 +26,7 @@ void Cbasic_ListBoxDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_my_list);
+	DDX_Control(pDX, IDC_PROGRESS1, m_my_progress);
 }
 
 BEGIN_MESSAGE_MAP(Cbasic_ListBoxDlg, CDialogEx)
@@ -36,6 +37,11 @@ BEGIN_MESSAGE_MAP(Cbasic_ListBoxDlg, CDialogEx)
 	ON_LBN_SELCHANGE(IDC_LIST1, &Cbasic_ListBoxDlg::OnSelchangeList1)
 	ON_BN_CLICKED(IDC_BUTTON3, &Cbasic_ListBoxDlg::OnBnClickedButton3)
 	ON_LBN_DBLCLK(IDC_LIST1, &Cbasic_ListBoxDlg::OnDblclkList1)
+	ON_WM_TIMER()
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_PROGRESS1, &Cbasic_ListBoxDlg::OnNMCustomdrawProgress1)
+	ON_BN_CLICKED(IDC_BUTTON4, &Cbasic_ListBoxDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON5, &Cbasic_ListBoxDlg::OnBnClickedButton5)
+	ON_BN_CLICKED(IDC_CHECK1, &Cbasic_ListBoxDlg::OnBnClickedCheck1)
 END_MESSAGE_MAP()
 
 
@@ -186,8 +192,48 @@ void Cbasic_ListBoxDlg::OnDblclkList1()
 	str = temp_path + str; // 현재 얻어온 경로 앞에 또 붙임
 	
 	// 부모 여부, 실행 명령, 실행 파일명, 내 파일의 경로, 어느경로에서 작업?, 일반모드로..
-	ShellExecute(NULL, L"open", L"notepad.exe", str, NULL, SW_SHOW);
+	//ShellExecute(NULL, L"open", L"notepad.exe", str, NULL, SW_SHOW);
+	
+	// 새로운 창에서 URL 연결도 가능!
+	//ShellExecute(NULL, L"open", L"chrome.exe", L"www.naver.com", NULL, SW_SHOW);
+
 
 	// 더블클릭시 내 프로그램의 경로 출력
 	AfxMessageBox(str);
+}
+
+
+void Cbasic_ListBoxDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	if (nIDEvent == 1) {
+		int pos = m_my_progress.GetPos();
+		if (pos == 100) KillTimer(1);
+		else m_my_progress.SetPos(pos + 1);
+	}else CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void Cbasic_ListBoxDlg::OnNMCustomdrawProgress1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
+}
+
+// 프로그래스 바를 컨트롤 하는 버튼
+void Cbasic_ListBoxDlg::OnBnClickedButton4()
+{
+	SetTimer(1, 100, NULL);
+}
+
+// 체크박스를 컨트롤하는 버튼
+void Cbasic_ListBoxDlg::OnBnClickedButton5()
+{
+	((CButton *)GetDlgItem(IDC_CHECK1))->SetCheck(1);
+}
+
+
+void Cbasic_ListBoxDlg::OnBnClickedCheck1()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
