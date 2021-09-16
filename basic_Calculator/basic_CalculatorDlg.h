@@ -37,13 +37,19 @@ public:
 	afx_msg void OnBnClickedButton3(); // 빼기
 	afx_msg void OnBnClickedButton4(); // 곱하기
 	afx_msg void OnBnClickedButton5(); // 나누기
+	afx_msg void OnBnClickedButton6();
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 
 private:
 	char m_op_flag = 0; // 0 : 덧셈, 1 : 뺄셈, 2 : 곱셈, 3 : 나눗셈
 	char m_step_flag = 0; // 연산자가 눌렸는지 기억, 1이면 기존 숫자를 지움
-	int m_first_value = 0;
+	char count = 0;
+
+	double m_first_value = 0;
+	double num = 0; // 이전 연산값 저장
+
+	
 	
 public:
-	afx_msg void OnBnClickedButton6();
+	afx_msg void OnBnClickedButton2();
 };

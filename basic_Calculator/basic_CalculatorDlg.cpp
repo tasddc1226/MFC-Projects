@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(Cbasic_CalculatorDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON5, &Cbasic_CalculatorDlg::OnBnClickedButton5)
 	ON_BN_CLICKED(IDC_BUTTON6, &Cbasic_CalculatorDlg::OnBnClickedButton6)
 
+	ON_BN_CLICKED(IDC_BUTTON2, &Cbasic_CalculatorDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -127,23 +128,56 @@ void Cbasic_CalculatorDlg::OnBnClickedButton6()
 
 	switch (m_op_flag) {
 	case 0:
-		m_first_value += second_value;
+		if (count != 0 && m_first_value == second_value) {
+			m_first_value += num;
+		}
+		else {
+			num = second_value;
+			m_first_value += second_value;
+		}
+		count++;
 		break;
+
 	case 1:
-		m_first_value -= second_value;
+		if (count != 0 && m_first_value == second_value) {
+			m_first_value -= num;
+		}
+		else {
+			num = second_value;
+			m_first_value -= second_value;
+		}
+		count++;
 		break;
+
 	case 2:
-		m_first_value *= second_value;
+		if (count != 0 && m_first_value == second_value) {
+			m_first_value *= second_value;
+		}
+		else {
+			num = second_value;
+			m_first_value *= second_value;
+		}
+		count++;
 		break;
+
 	case 3:
-		if (second_value != 0) m_first_value /= second_value;
-		else m_first_value = 0;
+		if (second_value != 0) {
+			if (count != 0 && m_first_value == second_value) {
+				m_first_value /= num;
+			}
+			else {
+				num = second_value;
+				m_first_value /= second_value;
+			}
+		} else {
+			m_first_value = 0;
+		}
+		count++;
 		break;
 	}
 	SetDlgItemInt(IDC_EDIT1, m_first_value);
 	m_step_flag = 1;
 }
-
 
 
 BOOL Cbasic_CalculatorDlg::OnCommand(WPARAM wParam, LPARAM lParam)
@@ -164,5 +198,11 @@ BOOL Cbasic_CalculatorDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 }
 
 
-
-
+// clear button
+void Cbasic_CalculatorDlg::OnBnClickedButton2()
+{
+	m_step_flag = 1;			  // 기존 숫자를 지워야 하므로 1로 설정
+	count = 0;					  // 초기 연산하는 것 처럼 count 초기화
+	num = 0;					  // 이전 연산값도 초기화
+	SetDlgItemText(IDC_EDIT1, 0); // 0으로 set
+}
