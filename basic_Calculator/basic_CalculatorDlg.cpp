@@ -124,38 +124,40 @@ void Cbasic_CalculatorDlg::OnBnClickedButton5()
 // = 버튼 : 연산 처리
 void Cbasic_CalculatorDlg::OnBnClickedButton6()
 {
-	int second_value = GetDlgItemInt(IDC_EDIT1);
+	CString str;
+	GetDlgItemText(IDC_EDIT1, str); // EDIT1의 문자열을 str에 저장
+	double second_value = _wtof(str); // 문자열을 실수로 변환
 
 	switch (m_op_flag) {
 	case 0:
 		if (count != 0 && m_first_value == second_value) {
-			m_first_value += num;
+			str.Format(L"%f", m_first_value += num);
 		}
 		else {
 			num = second_value;
-			m_first_value += second_value;
+			str.Format(L"%f", m_first_value += second_value);
 		}
 		count++;
 		break;
 
 	case 1:
 		if (count != 0 && m_first_value == second_value) {
-			m_first_value -= num;
+			str.Format(L"%f", m_first_value -= num);
 		}
 		else {
 			num = second_value;
-			m_first_value -= second_value;
+			str.Format(L"%f", m_first_value -= second_value);
 		}
 		count++;
 		break;
 
 	case 2:
 		if (count != 0 && m_first_value == second_value) {
-			m_first_value *= second_value;
+			str.Format(L"%f", m_first_value *= second_value);
 		}
 		else {
 			num = second_value;
-			m_first_value *= second_value;
+			str.Format(L"%f", m_first_value *= second_value);
 		}
 		count++;
 		break;
@@ -163,11 +165,11 @@ void Cbasic_CalculatorDlg::OnBnClickedButton6()
 	case 3:
 		if (second_value != 0) {
 			if (count != 0 && m_first_value == second_value) {
-				m_first_value /= num;
+				str.Format(L"%f", m_first_value /= num);
 			}
 			else {
 				num = second_value;
-				m_first_value /= second_value;
+				str.Format(L"%f", m_first_value /= second_value);
 			}
 		} else {
 			m_first_value = 0;
@@ -175,7 +177,8 @@ void Cbasic_CalculatorDlg::OnBnClickedButton6()
 		count++;
 		break;
 	}
-	SetDlgItemInt(IDC_EDIT1, m_first_value);
+	str.TrimRight(L"0"); // 0이 사라질 때까지 오른쪽 방향으로 가면서 지움
+	SetDlgItemText(IDC_EDIT1, str);
 	m_step_flag = 1;
 }
 

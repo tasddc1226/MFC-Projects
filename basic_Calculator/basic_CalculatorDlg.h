@@ -48,6 +48,7 @@ private:
 	double m_first_value = 0;
 	double num = 0; // 이전 연산값 저장
 
+
 	
 	
 public:
