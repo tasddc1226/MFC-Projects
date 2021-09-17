@@ -192,7 +192,7 @@ void Cbasic_ListBoxDlg::OnDblclkList1()
 	str = temp_path + str; // 현재 얻어온 경로 앞에 또 붙임
 	
 	// 부모 여부, 실행 명령, 실행 파일명, 내 파일의 경로, 어느경로에서 작업?, 일반모드로..
-	//ShellExecute(NULL, L"open", L"notepad.exe", str, NULL, SW_SHOW);
+	ShellExecute(NULL, L"open", L"notepad.exe", str, NULL, SW_SHOW);
 	
 	// 새로운 창에서 URL 연결도 가능!
 	//ShellExecute(NULL, L"open", L"chrome.exe", L"www.naver.com", NULL, SW_SHOW);
@@ -229,7 +229,14 @@ void Cbasic_ListBoxDlg::OnBnClickedButton4()
 // 체크박스를 컨트롤하는 버튼
 void Cbasic_ListBoxDlg::OnBnClickedButton5()
 {
-	((CButton *)GetDlgItem(IDC_CHECK1))->SetCheck(1);
+	if (flag == 0) {
+		((CButton *)GetDlgItem(IDC_CHECK1))->SetCheck(1);
+		flag = 1;
+	}
+	else {
+		((CButton *)GetDlgItem(IDC_CHECK1))->SetCheck(0);
+		flag = 0;
+	}
 }
 
 
