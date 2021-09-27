@@ -207,8 +207,12 @@ void Cbasic_ListBoxDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	if (nIDEvent == 1) {
 		int pos = m_my_progress.GetPos();
-		if (pos == 100) KillTimer(1);
-		else m_my_progress.SetPos(pos + 1);
+		if (pos == 100) {
+			KillTimer(1);
+			AfxMessageBox(L"완료되었습니다!");
+			m_my_progress.SetPos(0);
+		}
+		else m_my_progress.SetPos(pos + 5);
 	}else CDialogEx::OnTimer(nIDEvent);
 }
 
@@ -223,7 +227,7 @@ void Cbasic_ListBoxDlg::OnNMCustomdrawProgress1(NMHDR *pNMHDR, LRESULT *pResult)
 // 프로그래스 바를 컨트롤 하는 버튼
 void Cbasic_ListBoxDlg::OnBnClickedButton4()
 {
-	SetTimer(1, 100, NULL);
+	SetTimer(1, 10, NULL);
 }
 
 // 체크박스를 컨트롤하는 버튼
