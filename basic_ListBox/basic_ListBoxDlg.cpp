@@ -209,7 +209,7 @@ void Cbasic_ListBoxDlg::OnTimer(UINT_PTR nIDEvent)
 		int pos = m_my_progress.GetPos();
 		if (pos == 100) {
 			KillTimer(1);
-			AfxMessageBox(L"완료되었습니다!");
+			AfxMessageBox(L"완료되었습니다!!");
 			m_my_progress.SetPos(0);
 		}
 		else m_my_progress.SetPos(pos + 5);
