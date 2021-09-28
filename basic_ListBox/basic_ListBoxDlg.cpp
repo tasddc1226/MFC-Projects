@@ -115,18 +115,12 @@ void Cbasic_ListBoxDlg::OnBnClickedButton1()
 {
 	CString str;
 	GetDlgItemText(IDC_EDIT1, str);
-	if (str.Compare(L"") == 0) {
-		AfxMessageBox(L"입력이 비어있습니다!");
-	}
-	else {
-		// 얻은 문자열을 멤버변수를 사용해 리스트박스에 추가
-		//m_my_list.AddString(str); // AddString : 위치와 상관없이 문자열 추가 (기본: 오름차순 정렬)
-		int index = m_my_list.InsertString(-1, str); // InsertString : Add와 달리 위치를 명시. -1이면 가장 마지막 위치에 추가
 
-		m_my_list.SetCurSel(index); // 현재 위치를 커서가 선택
-	}
+	// 얻은 문자열을 멤버변수를 사용해 리스트박스에 추가
+	//m_my_list.AddString(str); // AddString : 위치와 상관없이 문자열 추가 (기본: 오름차순 정렬)
+	int index = m_my_list.InsertString(-1, str); // InsertString : Add와 달리 위치를 명시. -1이면 가장 마지막 위치에 추가
 
-	
+	m_my_list.SetCurSel(index); // 현재 위치를 커서가 선택
 }
 
 // 선택한 리스트를 삭제한다.
