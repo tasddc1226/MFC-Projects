@@ -6,6 +6,7 @@
 #include "ListBox_SQLite.h"
 #include "ListBox_SQLiteDlg.h"
 #include "afxdialogex.h"
+#include "CppSQLite3U.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,6 +26,7 @@ CListBox_SQLiteDlg::CListBox_SQLiteDlg(CWnd* pParent /*=NULL*/)
 void CListBox_SQLiteDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST1, viewDB);
 }
 
 BEGIN_MESSAGE_MAP(CListBox_SQLiteDlg, CDialogEx)
@@ -45,6 +47,7 @@ BOOL CListBox_SQLiteDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	scanDB();
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -83,5 +86,39 @@ void CListBox_SQLiteDlg::OnPaint()
 HCURSOR CListBox_SQLiteDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+// DB에서 데이터를 읽어서 리스트에 뿌려줌(더해줌)
+void CListBox_SQLiteDlg::scanDB()
+{
+	CString sTmp;
+	CListBox* pListPage;
+
+	// DB 생성
+	CppSQLite3DB db;
+
+	try {
+		// DB가 있는 경로에서 DB를 open
+		db.open(_T("test.db"));
+
+		// SQL 쿼리를 날려, 출력할 테이블의 컬럼을 정안다
+		sTmp.Format(_T("select name, region from customer;"));
+		CppSQLite3Query q = db.execQuery(sTmp);
+
+		// 컬럼이 없을때까지 출력
+		while (!q.eof()) {
+			CString nIdx = q.getStringField(0);
+			sTmp.Format(_T("%s"), nIdx);
+			// ListBox 변수에 DB값 추가
+			viewDB.AddString(sTmp);
+			q.nextRow();
+		}
+	}
+	catch (CppSQLite3Exception &e) {
+		viewDB.AddString(_T("에러"));
+	}
+
+	// db종료
+	db.close();
 }
 
