@@ -103,6 +103,9 @@ BEGIN_MESSAGE_MAP(Cbasic_SQLite3Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &Cbasic_SQLite3Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &Cbasic_SQLite3Dlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDOK, &Cbasic_SQLite3Dlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDCANCEL, &Cbasic_SQLite3Dlg::OnBnClickedCancel)
+	ON_BN_CLICKED(IDC_BUTTON3, &Cbasic_SQLite3Dlg::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -273,7 +276,6 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton1()
 	CString tel;
 	m_tel.GetWindowText(tel);
 
-
 	int nItem = m_list.InsertItem(0, name);
 	m_list.SetItemText(nItem, 1, tel);
 
@@ -332,6 +334,7 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton1()
 	}
 	else {
 		printf("insert OK!\n");
+		AfxMessageBox(L"추가 완료되었습니다.");
 	}
 
 	sqlite3_close(db);
@@ -353,7 +356,7 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton2()
 
 	char szName[100];
 	AnsiToUTF8(s_name, szName, 100);
-
+	printf("%s", s_name);
 	delete[]s_name;
 
 
@@ -383,4 +386,43 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton2()
 
 	sqlite3_close(db);
 	m_list.DeleteItem(row);
+}
+
+
+void Cbasic_SQLite3Dlg::OnBnClickedOk()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogEx::OnOK();
+}
+
+
+void Cbasic_SQLite3Dlg::OnBnClickedCancel()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogEx::OnCancel();
+}
+
+// 이름 검색
+void Cbasic_SQLite3Dlg::OnBnClickedButton3()
+{
+	// TODO : listCtrl에서가 아니라 SQLite3 query를 날려서 이름을 찾아보자.
+	CString name;
+	GetDlgItemText(IDC_EDIT3, name);
+
+	LVFINDINFO info;
+	int idx;
+
+	info.flags = LVFI_STRING;
+	info.psz = name;
+
+	idx = m_list.FindItem(&info);
+	if (idx != -1) {
+		AfxMessageBox(L"검색 완료되었습니다.");
+		printf("%d", idx);
+		m_list.SetItemState(idx, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED); // 해당 list 값 focus
+	}
+	else {
+		AfxMessageBox(L"찾지 못했습니다.");
+	}
+
 }
