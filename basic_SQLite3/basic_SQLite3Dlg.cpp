@@ -276,68 +276,74 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton1()
 	CString tel;
 	m_tel.GetWindowText(tel);
 
-	int nItem = m_list.InsertItem(0, name);
-	m_list.SetItemText(nItem, 1, tel);
-
-
-	m_name.SetWindowTextW(L"");
-	m_tel.SetWindowTextW(L"");
-
-
-
-	sqlite3 *db;
-	int rc = sqlite3_open("test.db", &db);
-
-	if (rc != SQLITE_OK)
-	{
-		printf("Failed to open DB\n");
-		sqlite3_close(db);
-		exit(1);
-	}
-
-
-
-	char * s_name;
-
-	int sLen = WideCharToMultiByte(CP_ACP, 0, name, -1, NULL, 0, NULL, NULL);
-	s_name = new char[sLen + 1];
-	WideCharToMultiByte(CP_ACP, 0, name, -1, s_name, sLen, NULL, NULL);
-
-	char szName[100];
-	AnsiToUTF8(s_name, szName, 100);
-
-	delete[]s_name;
-
-
-
-
-	char * s_tel;
-
-	sLen = WideCharToMultiByte(CP_ACP, 0, tel, -1, NULL, 0, NULL, NULL);
-	s_tel = new char[sLen + 1];
-	WideCharToMultiByte(CP_ACP, 0, tel, -1, s_tel, sLen, NULL, NULL);
-
-	char szTel[100];
-	AnsiToUTF8(s_tel, szTel, 100);
-
-	delete[]s_tel;
-
-
-
-	char *errmsg = NULL;
-	char sql[255] = { 0 };
-	sprintf(sql, "insert into db(name, tel) values('%s','%s');", szName, szTel);
-
-	if (SQLITE_OK != sqlite3_exec(db, sql, NULL, NULL, &errmsg))
-	{
-		printf("insert");
+	if (name.Compare(L"") == 0 || tel.Compare(L"") == 0) {
+		AfxMessageBox(L"입력이 비어있습니다.");
+		
 	}
 	else {
-		printf("insert OK!\n");
-		AfxMessageBox(L"추가 완료되었습니다.");
-	}
+		int nItem = m_list.InsertItem(0, name);
+		m_list.SetItemText(nItem, 1, tel);
 
-	sqlite3_close(db);
+
+		m_name.SetWindowTextW(L"");
+		m_tel.SetWindowTextW(L"");
+
+
+
+		sqlite3 *db;
+		int rc = sqlite3_open("test.db", &db); // return 값이 0이면 성공
+
+		if (rc != SQLITE_OK)
+		{
+			printf("Failed to open DB\n");
+			sqlite3_close(db);
+			exit(1);
+		}
+
+
+
+		char * s_name;
+
+		int sLen = WideCharToMultiByte(CP_ACP, 0, name, -1, NULL, 0, NULL, NULL);
+		s_name = new char[sLen + 1];
+		WideCharToMultiByte(CP_ACP, 0, name, -1, s_name, sLen, NULL, NULL);
+
+		char szName[100];
+		AnsiToUTF8(s_name, szName, 100);
+
+		delete[]s_name;
+
+
+
+
+		char * s_tel;
+
+		sLen = WideCharToMultiByte(CP_ACP, 0, tel, -1, NULL, 0, NULL, NULL);
+		s_tel = new char[sLen + 1];
+		WideCharToMultiByte(CP_ACP, 0, tel, -1, s_tel, sLen, NULL, NULL);
+
+		char szTel[100];
+		AnsiToUTF8(s_tel, szTel, 100);
+
+		delete[]s_tel;
+
+
+
+		char *errmsg = NULL;
+		char sql[255] = { 0 };
+		sprintf(sql, "insert into db(name, tel) values('%s','%s');", szName, szTel);
+
+		if (SQLITE_OK != sqlite3_exec(db, sql, NULL, NULL, &errmsg))
+		{
+			printf("insert");
+		}
+		else {
+			printf("insert OK!\n");
+			AfxMessageBox(L"회원이 추가 되었습니다.");
+		}
+
+		sqlite3_close(db);
+	}
 }
 
 // 삭제 버튼 클릭시 수행
@@ -356,14 +362,14 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton2()
 
 	char szName[100];
 	AnsiToUTF8(s_name, szName, 100);
-	printf("%s", s_name);
+	//printf("%s\n", s_name);
 	delete[]s_name;
 
 
 
 	sqlite3 *db;
-	int rc = sqlite3_open("test.db", &db);
-
+	int rc = sqlite3_open("test.db", &db); // return값이 0이면 성공
+	//printf("%d\n", rc);
 	if (rc != SQLITE_OK)
 	{
 		printf("Failed to open DB\n");
@@ -386,6 +392,7 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton2()
 
 	sqlite3_close(db);
 	m_list.DeleteItem(row);
+	AfxMessageBox(L"삭제되었습니다!");
 }
 
 
@@ -418,8 +425,12 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton3()
 	idx = m_list.FindItem(&info);
 	if (idx != -1) {
 		AfxMessageBox(L"검색 완료되었습니다.");
-		printf("%d", idx);
-		m_list.SetItemState(idx, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED); // 해당 list 값 focus
+		printf("%d\n", idx);
+
+		// 해당 list의 idx 값 focus
+		m_list.SetSelectionMark(idx);
+		m_list.SetItemState(idx, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
+		m_list.SetFocus();
 	}
 	else {
 		AfxMessageBox(L"찾지 못했습니다.");
