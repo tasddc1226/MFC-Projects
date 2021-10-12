@@ -284,7 +284,6 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton1()
 		int nItem = m_list.InsertItem(0, name);
 		m_list.SetItemText(nItem, 1, tel);
 
-
 		m_name.SetWindowTextW(L"");
 		m_tel.SetWindowTextW(L"");
 
@@ -423,6 +422,7 @@ void Cbasic_SQLite3Dlg::OnBnClickedButton3()
 	info.psz = name;
 
 	idx = m_list.FindItem(&info);
+	
 	if (idx != -1) {
 		AfxMessageBox(L"검색 완료되었습니다.");
 		printf("%d\n", idx);
