@@ -1,11 +1,19 @@
 
 // basic_clockDlg.cpp : 구현 파일
 //
+#define _WIN32_DCOM
 
 #include "stdafx.h"
 #include "basic_clock.h"
 #include "basic_clockDlg.h"
 #include "afxdialogex.h"
+#include <iostream>
+#include <comdef.h>
+#include <WbemIdl.h>
+
+#pragma commet(lib, "wbemuuid.lib");
+
+using namespace std;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,8 +21,6 @@
 
 
 // Cbasic_clockDlg 대화 상자
-
-
 
 Cbasic_clockDlg::Cbasic_clockDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_BASIC_CLOCK_DIALOG, pParent)
