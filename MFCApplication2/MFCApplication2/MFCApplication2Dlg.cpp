@@ -1,10 +1,10 @@
 
-// Thread_EXDlg.cpp : 구현 파일
+// MFCApplication2Dlg.cpp : 구현 파일
 //
 
 #include "stdafx.h"
-#include "Thread_EX.h"
-#include "Thread_EXDlg.h"
+#include "MFCApplication2.h"
+#include "MFCApplication2Dlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -45,35 +45,32 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CThread_EXDlg 대화 상자
+// CMFCApplication2Dlg 대화 상자
 
 
 
-CThread_EXDlg::CThread_EXDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_THREAD_EX_DIALOG, pParent)
+CMFCApplication2Dlg::CMFCApplication2Dlg(CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_MFCAPPLICATION2_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CThread_EXDlg::DoDataExchange(CDataExchange* pDX)
+void CMFCApplication2Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT2, m_strEditOutput);
 }
 
-BEGIN_MESSAGE_MAP(CThread_EXDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CMFCApplication2Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_WM_TIMER()
-	ON_BN_CLICKED(IDC_BUTTON1, &CThread_EXDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON2, &CThread_EXDlg::OnBnClickedButton2)
-	
 END_MESSAGE_MAP()
 
 
-// CThread_EXDlg 메시지 처리기
+// CMFCApplication2Dlg 메시지 처리기
 
-BOOL CThread_EXDlg::OnInitDialog()
+BOOL CMFCApplication2Dlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -103,12 +100,11 @@ BOOL CThread_EXDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	p1 = NULL;
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
-void CThread_EXDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CMFCApplication2Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -125,7 +121,7 @@ void CThread_EXDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
-void CThread_EXDlg::OnPaint()
+void CMFCApplication2Dlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -152,40 +148,8 @@ void CThread_EXDlg::OnPaint()
 
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
-HCURSOR CThread_EXDlg::OnQueryDragIcon()
+HCURSOR CMFCApplication2Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CThread_EXDlg::OnBnClickedButton1()
-{
-	p1 = AfxBeginThread(TimeThread, this);
-
-	if (p1 == NULL) {
-		AfxMessageBox(L"Error!");
-	}
-}
-
-void CThread_EXDlg::OnBnClickedButton2()
-{
-	// thread 중지
-	if (NULL != p1) {
-		::SuspendThread(p1->m_hThread);
-	}
-	SYSTEM_INFO stSysInfo;
-	GetSystemInfo(&stSysInfo);
-	
-}
-
-UINT CThread_EXDlg::TimeThread(LPVOID _mothod)
-{
-	CThread_EXDlg *fir = (CThread_EXDlg*)_mothod;
-	while (1) {
-		CTime cTime = CTime::GetCurrentTime();
-		fir->m_staticDisp.Format(_T("%d년 %d월 %d일\n%d시 %d분 %d초"), cTime.GetYear(), cTime.GetMonth(), cTime.GetDay(),
-			cTime.GetHour(), cTime.GetMinute(), cTime.GetSecond());
-		fir->SetDlgItemText(IDC_STATIC_DISP, fir->m_staticDisp);
-		Sleep(1000);
-	}
-	return 0;
-}
