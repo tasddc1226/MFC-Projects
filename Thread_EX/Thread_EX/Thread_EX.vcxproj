@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B1282368-BB50-4C9C-8F56-1F6D8453B250}</ProjectGuid>
-    <RootNamespace>MFCApplication1</RootNamespace>
+    <ProjectGuid>{041C5985-4980-425A-8377-347336526F37}</ProjectGuid>
+    <RootNamespace>Thread_EX</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
@@ -181,32 +181,37 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MFCApplication1.h" />
-    <ClInclude Include="MFCApplication1Dlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Thread_EX.h" />
+    <ClInclude Include="Thread_EXDlg.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MFCApplication1.cpp" />
-    <ClCompile Include="MFCApplication1Dlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Thread_EX.cpp" />
+    <ClCompile Include="Thread_EXDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MFCApplication1.rc" />
+    <ResourceCompile Include="Thread_EX.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\MFCApplication1.rc2" />
+    <None Include="res\Thread_EX.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MFCApplication1.ico" />
+    <Image Include="res\Thread_EX.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="Thread_EX.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

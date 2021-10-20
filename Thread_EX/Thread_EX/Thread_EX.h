@@ -1,5 +1,5 @@
 
-// MFCApplication1.h : PROJECT_NAME 응용 프로그램에 대한 주 헤더 파일입니다.
+// Thread_EX.h : PROJECT_NAME 응용 프로그램에 대한 주 헤더 파일입니다.
 //
 
 #pragma once
@@ -11,14 +11,14 @@
 #include "resource.h"		// 주 기호입니다.
 
 
-// CMFCApplication1App:
-// 이 클래스의 구현에 대해서는 MFCApplication1.cpp을 참조하십시오.
+// CThread_EXApp:
+// 이 클래스의 구현에 대해서는 Thread_EX.cpp을 참조하십시오.
 //
 
-class CMFCApplication1App : public CWinApp
+class CThread_EXApp : public CWinApp
 {
 public:
-	CMFCApplication1App();
+	CThread_EXApp();
 
 // 재정의입니다.
 public:
@@ -29,4 +29,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CMFCApplication1App theApp;
+extern CThread_EXApp theApp;

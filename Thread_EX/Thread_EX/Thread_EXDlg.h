@@ -1,20 +1,21 @@
 
-// MFCApplication1Dlg.h : 헤더 파일
+// Thread_EXDlg.h : 헤더 파일
 //
 
 #pragma once
+#include "afxwin.h"
 
 
-// CMFCApplication1Dlg 대화 상자
-class CMFCApplication1Dlg : public CDialogEx
+// CThread_EXDlg 대화 상자
+class CThread_EXDlg : public CDialogEx
 {
 // 생성입니다.
 public:
-	CMFCApplication1Dlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
+	CThread_EXDlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_MFCAPPLICATION1_DIALOG };
+	enum { IDD = IDD_THREAD_EX_DIALOG };
 #endif
 
 	protected:
@@ -31,4 +32,12 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CWinThread *p1;
+	CString m_staticDisp;
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	static UINT TimeThread(LPVOID _mothod);
+	
+	
 };
