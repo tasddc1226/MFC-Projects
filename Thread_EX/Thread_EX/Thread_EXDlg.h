@@ -40,4 +40,5 @@ public:
 	static UINT TimeThread(LPVOID _mothod);
 	
 	
+	CEdit m_strEditOutput;
 };
