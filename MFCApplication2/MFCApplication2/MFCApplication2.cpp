@@ -5,6 +5,8 @@
 #include "stdafx.h"
 #include "MFCApplication2.h"
 #include "MFCApplication2Dlg.h"
+#include <string>
+#include <tchar.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

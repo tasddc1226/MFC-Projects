@@ -77,6 +77,30 @@ int main(int argc, char**argv)
 	int page_Size = stSysInfo.dwPageSize;			  // 페이지 크기
 	int proc_Type = stSysInfo.dwProcessorType;		  // 프로세서 type
 
+	MEMORYSTATUSEX memInfo;
+	memInfo.dwLength = sizeof(_MEMORYSTATUSEX);
+	GlobalMemoryStatusEx(&memInfo);
+	static DWORDLONG totalVirtualMem = memInfo.ullTotalPageFile;						   // 총 가상 메모리
+	DWORDLONG vitualMemUsed = totalVirtualMem - memInfo.ullAvailPageFile;		   // 현재 사용 중인 가상 메모리
+
+	static DWORDLONG totalPhysMem = memInfo.ullTotalPhys;					// 총 물리적 메모리(RAM)
+	DWORDLONG physMemAvail;							// 물리적 메모리 여유량
+	DWORDLONG physMemUsed;				            // 현재 사용 중인 물리 메모리
+	
+	for (int i = 0; i < 10; i++) {
+		physMemAvail = memInfo.ullAvailPhys;
+		physMemUsed = totalPhysMem - physMemAvail;
+		cout << "여유 물리 메모리:\t" << physMemAvail << "\n";
+		cout << "사용중인 물리 메모리:\t" << physMemUsed << "\n";
+		cout << "총 물리 메모리:\t\t" << totalPhysMem << "\n";
+		Sleep(1000);
+	}
+	
+	//cout << "사용중인 가상 메모리:\t" << vitualMemUsed << "\n";
+	//cout << "총 가상 메모리:\t\t" << totalVirtualMem << "\n";
+
+	
+
 	// 1단계
 	// COM 초기화
 	HRESULT hres;
